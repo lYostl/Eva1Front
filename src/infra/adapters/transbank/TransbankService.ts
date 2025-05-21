@@ -10,6 +10,7 @@ constructor() {
       'https://webpay3gint.transbank.cl' // Integration URL (TEST)
     );
 }
+
 async createTransaction(
     amount: number,
     buyOrder: string,
@@ -17,12 +18,16 @@ async createTransaction(
     returnUrl: string
 ) {
     const transaction = new WebpayPlus.Transaction(this.options);
-    return await transaction.create(
+    const response = await transaction.create(
     buyOrder,
     sessionId,
     amount,
     returnUrl
     );
-}
 
+    return {
+    token: response.token,
+    url: response.url
+    };
+}
 }

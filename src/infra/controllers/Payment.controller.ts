@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Logger } from "@nestjs/common";
+import { Body, Controller, Get, Logger, Post, Query } from "@nestjs/common";
 import { CreatePaymentUseCase } from "../../app/use-cases/CreatePaymentUseCase";
 
 @Controller('payment')
@@ -22,5 +22,11 @@ async create(@Body() body: any) {
     this.logger.error('Error creating payment', error.stack);
     throw new Error('Error creating payment');
     }
+}
+
+@Get('confirm')
+async confirm(@Query('token_ws') token: string) {
+    this.logger.log(`Confirmando pago con token: ${token}`);
+    return { message: 'Confirmación recibida correctamente', token };
 }
 }
